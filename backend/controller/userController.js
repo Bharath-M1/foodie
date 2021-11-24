@@ -54,7 +54,7 @@ exports.login = (req, res) => {
     .then(async (data) => {
       const authUser = await bcrypt.compareSync(password, data.password)
       if (authUser) {
-        const token = jwt.sign({ id: data._id }, process.env.SECRET, { algorithm: 'HS256' })
+        const token = jwt.sign({ id: data._id, role: data.role }, process.env.SECRET, { algorithm: 'HS256' })
         res.header("Bearer", token);
         res.json({ token: "Bearer " + token, data: data, status: "ok", message: "Successfully logged in" })
       } else {
