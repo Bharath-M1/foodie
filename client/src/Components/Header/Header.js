@@ -11,7 +11,7 @@ function Header() {
             <div className='navbar'>
                 <Container>
                     <div className='nav_logo'>
-                        <h1 className='logo'>RVS Canteen</h1>
+                        <h1 className='logo'>Foodie</h1>
                     </div>
                     <div className='nav_items'>
                         <a className='nav_link'><FiShoppingCart className='cart_icon' size={25} /></a>
@@ -22,7 +22,7 @@ function Header() {
             </div>
             <div className='mobile_nav'>
                 <GiHamburgerMenu className='mobile_nav_menu' />
-                <h2 className='mobile_nav_logo'>RVS CANTEEN</h2>
+                <h2 className='mobile_nav_logo'>Foodie</h2>
                 <GiHamburgerMenu className='sample_menu' />
             </div>
         </div>
