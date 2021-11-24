@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const db = require('../config/dbConfig')
+
+
 const userSchema = mongoose.Schema({
   name: { type: String },
   email: {
@@ -24,4 +25,6 @@ const userSchema = mongoose.Schema({
   balance: { type: Number, required: true, default: 0 }
 }, { timestamps: true })
 
-module.exports = db.studentDatabase.model('user', userSchema);
+
+
+module.exports = mongoose.model('user', userSchema);

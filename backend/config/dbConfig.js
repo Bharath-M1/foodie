@@ -1,15 +1,16 @@
 const mongoose = require('mongoose')
-require("dotenv").config();
 
-mongoose.studentDatabase = mongoose.createConnection(process.env.DB_CLUSTER_STUDENT, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useCreateIndex: true
-})
 
-mongoose.adminDatabase = mongoose.createConnection(process.env.DB_CLUSTER_ADMIN, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useCreateIndex: true
-})
-module.exports = mongoose
+const connectDB = () => {
+  mongoose.Promise = global.Promise;
+  mongoose.connect(process.env.DB_CLUSTER, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+  }).then(() => {
+    console.log("Successfully connected to database 🚀 ")
+  }).catch(err => console.log(err))
+}
+
+
+module.exports = connectDB;

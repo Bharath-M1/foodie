@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const db = require('../config/dbConfig')
+
 
 const createStore = mongoose.Schema({
   name: {
@@ -16,4 +16,6 @@ const createStore = mongoose.Schema({
   // }
 }, { timestamps: true })
 
-module.exports = db.studentDatabase.model('store', createStore)
+
+
+module.exports = mongoose.model('store', createStore)

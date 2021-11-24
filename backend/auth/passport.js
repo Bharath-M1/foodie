@@ -4,28 +4,13 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 require('dotenv').config()
 
-/* const passportOptions = {
-  jwtFromRequest=ExtractJwt.fromHeader(authtoken),
-  secretOrKey= process.env.SECRET,
-  issuer: "bharath",
-  audience: "myntraModel",
-  algorithms: ['RS256'],
-  ignoreExpiration: false,
-  passReqToCallback: false,
-  jsonWebTokenOptions: {
-    complete: false,
-    clockTolerance: '',
-    maxAge: '2d',
-    clockTimestamp: '100',
-    nonce: 'string'
-  }
-} */
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.SECRET,
   algorithms: ['HS256']
 }
+
 
 const strategy = new JwtStrategy(options, (payload, done) => {
   // console.log(payload)
@@ -45,6 +30,25 @@ const strategy = new JwtStrategy(options, (payload, done) => {
     })
 })
 
+
 module.exports = (passport) => {
   passport.use(strategy)
 }
+
+
+/* const passportOptions = {
+  jwtFromRequest=ExtractJwt.fromHeader(authtoken),
+  secretOrKey= process.env.SECRET,
+  issuer: "bharath",
+  audience: "myntraModel",
+  algorithms: ['RS256'],
+  ignoreExpiration: false,
+  passReqToCallback: false,
+  jsonWebTokenOptions: {
+    complete: false,
+    clockTolerance: '',
+    maxAge: '2d',
+    clockTimestamp: '100',
+    nonce: 'string'
+  }
+} */

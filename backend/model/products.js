@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const db = require(`../config/dbConfig`)
+
 const schema = mongoose.Schema
 const productSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -7,4 +7,6 @@ const productSchema = mongoose.Schema({
   store: { type: schema.Types.ObjectId, required: true }
 }, { timestamps: true })
 
-module.exports = db.studentDatabase.model('product', productSchema);
+
+
+module.exports = mongoose.model('product', productSchema);
