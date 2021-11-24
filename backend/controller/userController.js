@@ -52,6 +52,7 @@ exports.login = (req, res) => {
   let password = req.body.password
   user.findOne({ mobileNo: req.body.mobileNo })
     .then(async (data) => {
+      console.log(data);
       const authUser = await bcrypt.compareSync(password, data.password)
       if (authUser) {
         const token = jwt.sign({ id: data._id, role: data.role }, process.env.SECRET, { algorithm: 'HS256' })
