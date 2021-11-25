@@ -36,7 +36,7 @@ exports.getTransactionsOfUser = (req, res) => {
   user.findOne({ regNo: req.body.regNo })
     .then((data) => {
       if (data) {
-        history.find({ userId: data._id })
+        history.find({ userId: data._id }).populate("userId")
           .then(transaction => {
             res.json({ data: transaction, msg: "successfully retrived transactions" })
           }).catch(err => console.log(err))

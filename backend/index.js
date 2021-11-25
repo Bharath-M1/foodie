@@ -14,6 +14,7 @@ connectDb()
 
 
 // adding middleware
+app.use(express.static("public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(passport.initialize())
@@ -28,7 +29,8 @@ app.use('/home',
     require('./routes/userRoute'),
     require('./routes/productRoute'),
     require('./routes/storeRoute'),
-    require('./routes/adminRoute')
+    require('./routes/adminRoute'),
+    require('./routes/orderRoute')
 )
 
 

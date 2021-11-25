@@ -18,6 +18,8 @@ const strategy = new JwtStrategy(options, (payload, done) => {
     .then((user) => {
       // console.log(user)
       if (user) {
+        // console.log(user._id);
+        // res.user = user._id
         return done(null, user)
       } else {
         console.log("error")
