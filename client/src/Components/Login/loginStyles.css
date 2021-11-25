@@ -17,7 +17,7 @@
 .input_field{
     display: block;
     margin:8px 0px;
-    width:300px;
+    width:400px;
     border:1px solid grey;
     padding:8px;
     border-radius: 10px;
@@ -26,7 +26,6 @@
 .submit_btn{
     border:1px solid #7F000E;
     background-color: #7F000E;
-    margin:15px 80px;
     width:150px;
     color:white;
     padding:5px;
@@ -39,14 +38,7 @@
         padding:20px;
         box-shadow: 10px 10px #00000033;
     }
-    .input_field{
-        display: block;
-        margin:8px 0px;
-        width:200px;
-        border:1px solid grey;
-        padding:8px;
-        border-radius: 10px;
-    }
+    
 
     .submit_btn{
         border:1px solid #7F000E;
@@ -66,11 +58,7 @@
         
         box-shadow: 10px 10px #00000033;
     }
-    .input_field{
-       
-        width:400px;
-       
-    }
+   
 
     
 }
@@ -82,11 +70,7 @@
         box-shadow: 10px 10px #00000033;
         
     }
-    .input_field{
-       
-        width:400px;
-        
-    }
+   
     .submit_btn{
        
         margin:15px 150px;
@@ -102,9 +86,7 @@
         box-shadow: 10px 10px #00000033;
        
     }
-    .input_field{
-        width:400px;
-    }
+    
     .submit_btn{
        
         margin:15px 150px;
@@ -120,11 +102,7 @@
         width:550px;
         box-shadow: 10px 10px #00000033;
     }
-    .input_field{
-        
-        width:400px;
-        
-    }
+  
     .submit_btn{
        
         margin:15px 150px;
