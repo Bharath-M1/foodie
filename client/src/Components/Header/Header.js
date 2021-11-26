@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import{Link} from 'react'
+import { Link } from 'react'
 import { Container, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import { FiShoppingCart } from 'react-icons/fi'
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -36,19 +36,19 @@ function Header() {
             </div>
 
 
-{/* Signin and Signup Modal */}
+            {/* Signin and Signup Modal */}
             <div>
                 {/* Signin Modal */}
                 <Modal
                     isOpen={loginModal}
-                    
+
                     toggle={() => setloginModal(false)}
                 >
                     <ModalHeader className='border-0 ' toggle={() => setloginModal(false)}>
                     </ModalHeader>
                     <ModalBody>
 
-                        <LoginPage signup={()=>setsignUpModal(true)} onClick={() => setloginModal(false)} />
+                        <LoginPage signup={() => setsignUpModal(true)} onClick={() => setloginModal(false)} />
                     </ModalBody>
                 </Modal>
                 {/* Signin Modal */}

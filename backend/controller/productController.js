@@ -35,12 +35,19 @@ exports.create = (req, res) => {
     rate: req.body.rate
   })
     .then(data => { res.send(data) })
-    .catch(err => { if (err) return res.status(500).send("There was a problem creating the user.") })
+    .catch(err => { if (err) return res.json({ msg: "problem while creating the product", error: err }) })
 }
 
 
 exports.get = (req, res) => {
   products.find({}).populate('store')
+    .then(data => { res.send(data) })
+    .catch(err => { if (err) return /* res.status(500).send(`There was a problem creating the user. ${err}`) */res.json({ err: err }) })
+}
+
+
+exports.getParticularProduct = (req, res) => {
+  products.find({ store: req.body.store, _id: req.body._id }).populate("store")
     .then(data => { res.send(data) })
     .catch(err => { if (err) return /* res.status(500).send(`There was a problem creating the user. ${err}`) */res.json({ err: err }) })
 }
