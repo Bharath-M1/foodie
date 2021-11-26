@@ -1,7 +1,9 @@
+
 import React from 'react'
 import './loginStyles.css'
 
 function LoginPage({onClick}) {
+
     return (
         <div >
             <div >
