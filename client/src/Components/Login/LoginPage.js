@@ -1,13 +1,9 @@
-import React,{useEffect,useState} from 'react'
 
+import React from 'react'
 import './loginStyles.css'
 
 function LoginPage({onClick}) {
-    const [mobileNo, setMobileNo] = useState("")
-    // const [password, setMobileNo] = useState("")
-useEffect(()=>{
 
-},[])
     return (
         <div >
             <div >

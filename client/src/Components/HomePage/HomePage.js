@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import { Row, Col, Container } from 'reactstrap'
+======
 import Cards from '../Card/Cards';
 
 
@@ -16,6 +18,7 @@ function HomePage() {
     //     }).catch((err)=>{
     //         console.log(err)
     //     })
+
 
     // })
 
@@ -64,6 +67,8 @@ function HomePage() {
             </Row>
 
         </div>
+
+        
     )
 }
 
