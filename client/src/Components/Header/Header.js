@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-
 import { Link } from 'react'
-
 import { Container, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
 import { FiShoppingCart } from 'react-icons/fi'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 import './styles.css'
 import LoginPage from '../Login/LoginPage'
+import Signupform from '../Register/Signupform'
+import { successToast } from '../utils/toast'
 
 
 function Header() {
@@ -37,21 +37,20 @@ function Header() {
                 <GiHamburgerMenu className='sample_menu' />
             </div>
 
+
+            {/* Signin and Signup Modal */}
             <div>
                 {/* Signin Modal */}
                 <Modal
                     isOpen={loginModal}
 
-
                     toggle={() => setloginModal(false)}
-                
+                >
                     <ModalHeader className='border-0 ' toggle={() => setloginModal(false)}>
                     </ModalHeader>
                     <ModalBody>
 
-
                         <LoginPage signup={() => setsignUpModal(true)} onClick={() => setloginModal(false)} />
-
                     </ModalBody>
                 </Modal>
                 {/* Signin Modal */}
@@ -65,8 +64,7 @@ function Header() {
                     <ModalHeader className='border-0 ' toggle={() => setsignUpModal(false)}>
                     </ModalHeader>
                     <ModalBody>
-                        <h1>Signup</h1>
-                        <LoginPage onClick={() => setsignUpModal(false)} />
+                        <Signupform onClick={() => { successToast("clicked"); setsignUpModal(false); }} />
                     </ModalBody>
                 </Modal>
                 {/* Signup Modal */}

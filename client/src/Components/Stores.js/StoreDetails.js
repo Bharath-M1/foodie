@@ -1,40 +1,36 @@
-import React,{} from 'react'
+import axios from '../utils/axios'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import {Row,Col,Card} from 'reactstrap'
+import { Row, Col, Card } from 'reactstrap'
 
 function StoreDetails() {
-    const {id}= useParams()
-    
-    console.log(id)
+    const { id } = useParams()
+    const [products, setProducts] = useState([])
+    // console.log(storeId, id, "this");
 
-    const products=[
-        {
-            "name":"Samosa",
-            "store":"ABC Canteen"
-        }
-        ,{
-            "name":"Veg Cutlet",
-            "store":"ABC Canteen"
-        },{
-            "name":"Sandwich",
-            "store":"ABC Canteen"
-        },{
-            "name":"Egg roll",
-            "store":"ABC Canteen"
-        }]
+    useEffect(() => {
+        // console.log("hai");
+        axios.get(`/getProductsfromSingleStore/${id}`)
+            .then((response) => {
+                console.log(response.data);
+                setProducts(response.data)
+            }).catch((err) => {
+                console.log(err)
+            })
 
-    const renderProducts=products.map((product)=>
-    <Card className='my-4 p-4'>
-    <Row>
-        <Col lg={4}>
-        </Col>
-        <Col lg={8}>
-            <h4>{product.name}</h4>
-            <h6>{product.store}</h6>
-        </Col>
-    </Row>
-    </Card>)
+    }, [])
 
+    const renderProducts = products.map((product) =>
+        <Card className='my-4 p-4'>
+            <Row>
+                <Col lg={4}>
+                </Col>
+                <Col lg={8}>
+                    <h4>{product.name}</h4>
+                    <h6>&#8377; {product.rate}</h6>
+                </Col>
+            </Row>
+        </Card>)
 
     return (
         <div>
@@ -48,9 +44,9 @@ function StoreDetails() {
                 <span className='clearfix'></span>
             </div>
             <div>
-            {renderProducts}
+                {renderProducts}
             </div>
-            
+
         </div>
     )
 }

@@ -51,3 +51,11 @@ exports.getParticularProduct = (req, res) => {
     .then(data => { res.send(data) })
     .catch(err => { if (err) return /* res.status(500).send(`There was a problem creating the user. ${err}`) */res.json({ err: err }) })
 }
+
+
+exports.getStoreProduct = (req, res) => {
+  // console.log(req.body, req.params, "waiting for id");
+  products.find({ store: req.params.store })
+    .then(data => { res.send(data) })
+    .catch(err => { if (err) return /* res.status(500).send(`There was a problem creating the user. ${err}`) */res.json({ err: err }) })
+}

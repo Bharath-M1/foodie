@@ -3,8 +3,10 @@ import { Card, CardImg, CardTitle, Button, CardBody } from 'reactstrap'
 
 
 function Cards({ title }) {
+  console.log(title);
   return (
     <div>
+
       <Card>
         <CardImg
           alt={title}
@@ -13,7 +15,7 @@ function Cards({ title }) {
           width="100%"
         />
         <CardBody>
-          <CardTitle className='text-decoration-none text-dark' tag="h5">
+          <CardTitle className='' tag="h5">
             {title}
           </CardTitle>
         </CardBody>

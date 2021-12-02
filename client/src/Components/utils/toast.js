@@ -1,19 +1,19 @@
 import { toast } from 'react-toastify';
 
 
-export const successToast = (message, time = 5000) => {
+export const successToast = (message, time = 15000) => {
   toast.success(message, {
-    position: 'top-center',
-    autoClose: time,
-    hideProgressBar: true,
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
     closeOnClick: true,
-    pauseOnHover: false,
-    draggable: false,
+    pauseOnHover: true,
+    draggable: true,
     progress: undefined,
   });
 };
 
-export const infoToast = (message, time = 5000) => {
+export const infoToast = (message, time = 15000) => {
   toast.info(message, {
     position: 'top-left',
     autoClose: time,
@@ -25,7 +25,7 @@ export const infoToast = (message, time = 5000) => {
   });
 };
 
-export const warningToast = (message, time = 5000) => {
+export const warningToast = (message, time = 15000) => {
   toast.warning(message, {
     position: 'top-left',
     autoClose: time,
@@ -37,7 +37,7 @@ export const warningToast = (message, time = 5000) => {
   });
 };
 
-export const errorToast = (message, time = 5000) => {
+export const errorToast = (message, time = 15000) => {
   toast.error(message, {
     position: 'top-center',
     autoClose: time,
