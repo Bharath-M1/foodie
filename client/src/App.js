@@ -42,7 +42,6 @@ function App() {
             {
               !localStorage.getItem("role") == "student" && <Route exact path='/admin' element={<Admin />} />
             }
-
             <Route exact path='/store' element={<Store />} />
           </Routes>
         </Container>
