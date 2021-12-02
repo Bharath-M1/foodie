@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
 
 exports.get = (req, res) => {
-  store.find({}).select("_id")
+  store.find({})
     .then((data) => { res.send(data) })
     .catch(err => console.log(err))
 }

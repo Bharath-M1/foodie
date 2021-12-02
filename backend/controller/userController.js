@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 //create a new student 
 exports.create = (req, res) => {
   /* only hashsync create a password not hash in bcrypt */
-  console.log(req.body.password);
+  // console.log(req.body);
   const hashedPass = bcrypt.hashSync(req.body.password, 8)
   user.create(
     {
@@ -21,9 +21,11 @@ exports.create = (req, res) => {
       dept: req.body.dept
     })
     .then(data => {
+      // console.log(data);
       res.json({ status: "ok", data: data })
     })
     .catch(err => {
+      console.log(err);
       res.json({ status: "err", err: err.message })
     });
 }

@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import './styles.css'
 import LoginPage from '../Login/LoginPage'
 import Signupform from '../Register/Signupform'
+import { successToast } from '../utils/toast'
 
 
 function Header() {
@@ -63,7 +64,7 @@ function Header() {
                     <ModalHeader className='border-0 ' toggle={() => setsignUpModal(false)}>
                     </ModalHeader>
                     <ModalBody>
-                        <Signupform onClick={()=>setsignUpModal(false)}/>
+                        <Signupform onClick={() => { successToast("clicked"); setsignUpModal(false); }} />
                     </ModalBody>
                 </Modal>
                 {/* Signup Modal */}
