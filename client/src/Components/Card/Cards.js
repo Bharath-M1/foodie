@@ -1,12 +1,10 @@
-import React from 'react'
-import { Card, CardImg, CardTitle, Button, CardBody } from 'reactstrap'
+import React from "react";
+import { Card, CardImg, CardTitle, Button, CardBody } from "reactstrap";
 
-
-function Cards({ title }) {
+function Cards({ title, children }) {
   console.log(title);
   return (
-    <div>
-
+    <div className="my-5">
       <Card>
         <CardImg
           alt={title}
@@ -15,13 +13,14 @@ function Cards({ title }) {
           width="100%"
         />
         <CardBody>
-          <CardTitle className='' tag="h5">
+          <CardTitle className="" tag="h5">
             {title}
           </CardTitle>
+          {children}
         </CardBody>
       </Card>
     </div>
-  )
+  );
 }
 
-export default Cards
+export default Cards;
