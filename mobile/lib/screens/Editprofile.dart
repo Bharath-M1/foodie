@@ -18,10 +18,10 @@ class _ProfileEditState extends State<ProfileEdit> {
         toolbarHeight: 75,
         elevation: 0,
         title: Text(
-          "Profile",
+          "Edit Profile",
           style: TextStyle(
             fontWeight: FontWeight.w900,
-            fontSize: 30,
+            fontSize: 25,
             color: solidWhite,
           ),
         ),

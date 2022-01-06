@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodie/screens/Login.dart';
 import 'package:foodie/utils/const.dart';
 
 class CartScreen extends StatefulWidget {
@@ -129,24 +130,29 @@ class _CartScreenState extends State<CartScreen> {
               ),
               Positioned(
                 bottom: 70,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black38,
-                        spreadRadius: 2,
-                        blurRadius: 2,
-                        offset: Offset(1.5, 1.5),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => primaryColor),
+                    elevation:
+                        MaterialStateProperty.resolveWith((states) => 5.0),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
                       ),
-                    ],
+                    ),
                   ),
-                  width: size.width * 0.8,
-                  // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: TextButton(
-                    onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (builder) => LoginPage(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: size.width * 0.6,
+                    padding: EdgeInsets.all(10),
                     child: Text(
                       "ORDER",
                       style: TextStyle(
@@ -158,6 +164,42 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                 ),
+                // GestureDetector(
+                //   onTap: () {
+                //     showLoginBottomBar();
+                //   },
+                //   child: Container(
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //       color: primaryColor,
+                //       borderRadius: BorderRadius.circular(15),
+                //       boxShadow: [
+                //         BoxShadow(
+                //           color: Colors.black38,
+                //           spreadRadius: 2,
+                //           blurRadius: 2,
+                //           offset: Offset(1.5, 1.5),
+                //         ),
+                //       ],
+                //     ),
+                //     width: size.width * 0.8,
+                //     // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                //     child: TextButton(
+                //       onPressed: () {
+                //         showLoginBottomBar();
+                //       },
+                //       child: Text(
+                //         "ORDER",
+                //         style: TextStyle(
+                //           color: solidWhite,
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.bold,
+                //           fontFamily: "proximanova",
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ),
             ],
           ),

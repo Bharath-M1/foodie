@@ -164,42 +164,79 @@ class _ProductScreeenState extends State<ProductScreeen> {
                 ),
                 Positioned(
                   bottom: 15,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                          offset: Offset(1.5, 1.5),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => primaryColor),
+                      elevation:
+                          MaterialStateProperty.resolveWith((states) => 5.0),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
-                      ],
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (builder) => BottomNavBar(
-                              index: 1,
-                            ),
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (builder) => BottomNavBar(
+                            index: 1,
                           ),
-                          (route) => false,
-                        );
-                      },
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: size.width * 0.3,
+                      padding: EdgeInsets.all(10),
                       child: Text(
-                        "Go to Cart",
+                        "Go to cart",
                         style: TextStyle(
                           color: solidWhite,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: "proximanova",
-                          fontSize: 18,
                         ),
                       ),
                     ),
                   ),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: primaryColor,
+                  //     borderRadius: BorderRadius.circular(15),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black38,
+                  //         spreadRadius: 2,
+                  //         blurRadius: 2,
+                  //         offset: Offset(1.5, 1.5),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   padding: EdgeInsets.symmetric(horizontal: 25),
+                  //   child: TextButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushAndRemoveUntil(
+                  //         MaterialPageRoute(
+                  //           builder: (builder) => BottomNavBar(
+                  //             index: 1,
+                  //           ),
+                  //         ),
+                  //         (route) => false,
+                  //       );
+                  //     },
+                  //     child: Text(
+                  //       "Go to Cart",
+                  //       style: TextStyle(
+                  //         color: solidWhite,
+                  //         fontWeight: FontWeight.bold,
+                  //         fontFamily: "proximanova",
+                  //         fontSize: 18,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ],
             ),
