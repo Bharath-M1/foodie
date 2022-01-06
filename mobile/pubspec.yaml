@@ -1,0 +1,66 @@
+name: foodie
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+  http: ^0.13.3
+
+  intl: ^0.17.0
+
+  badges: ^2.0.1
+
+  flutter_switch: ^0.3.2
+
+  flutter_bloc: ^7.3.0
+
+  equatable: ^2.0.3
+
+  form_field_validator: ^1.1.0
+
+  font_awesome_flutter: ^9.1.0
+
+  image_picker: ^0.8.3+1
+
+  shared_preferences: ^2.0.7
+
+  cached_network_image: ^3.1.0
+  
+  api_cache_manager: ^1.0.2
+
+  page_indicator: ^0.4.1
+
+  pull_to_refresh: ^2.0.0
+
+  fluttertoast: ^8.0.8
+
+  permission_handler: ^8.1.6
+
+  flutter_spinkit: ^5.1.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.9.2
+
+flutter:
+
+  uses-material-design: true
+
+  fonts:
+    - family: proximanova
+      fonts:
+      - asset: assets/fonts/Proxima-Nova-Font.otf
+
+  assets:
+  - assets/lottie/
+  - assets/images/
+  - assets/icons/
+  - assets/fonts/
