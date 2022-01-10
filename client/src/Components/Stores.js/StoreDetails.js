@@ -7,6 +7,7 @@ function StoreDetails() {
   const { id } = useParams();
   const [store, setStore] = useState({});
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
   // console.log(storeId, id, "this");
 
   useEffect(() => {
@@ -33,6 +34,17 @@ function StoreDetails() {
         setStore(response.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const addToCart = (product) => {
+    console.log(product);
+    const products = JSON.parse(localStorage.getItem("products"));
+
+    products.push(product);
+
+    localStorage.removeItem("products");
+
+    localStorage.setItem("products", JSON.stringify(products));
   };
 
   const renderProducts = products.map((product) => (
@@ -71,6 +83,13 @@ function StoreDetails() {
               ))}
             </span>
           </p>
+          <button className="btn w-5 mx-1 bg-success text-white">Order</button>
+          <button
+            onClick={() => addToCart(product)}
+            className="btn w-5 mx-1 bg-primary text-white"
+          >
+            Add to Cart
+          </button>
         </Col>
       </Row>
     </Card>
