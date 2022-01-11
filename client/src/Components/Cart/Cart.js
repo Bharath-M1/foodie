@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col } from "reactstrap";
+import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 function Cart() {
@@ -10,10 +11,15 @@ function Cart() {
   }, []);
 
   const getCart = () => {
+    const loggedUser = localStorage.getItem("user");
+    const decodeUser = jwt_decode(loggedUser);
+
+    console.log(decodeUser.id);
     axios
-      .get("http://localhost:5000/cart")
+      .post("/getCart", { user: decodeUser.id })
       .then((cart) => {
-        setCartData(cart);
+        // setCartData(cart);
+        console.log(cart);
       })
       .catch((err) => {
         console.log(err);
@@ -23,7 +29,7 @@ function Cart() {
   const removeFromCart = (id) => {};
 
   const renderProducts =
-    cartData === [""] ? (
+    cartData.length === 0 ? (
       <h1 className="fw-bold text-center fs-4">Your Cart is Empty</h1>
     ) : (
       cartData.map((product, index) => (

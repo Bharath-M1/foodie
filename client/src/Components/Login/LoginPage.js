@@ -9,9 +9,12 @@ function LoginPage({ onClick }) {
 
   const handleSubmit = () => {
     axios
-      .post("/login", { mobileNo: mobileNo, password: password })
+      .post("/home/login", {
+        mobileNo: mobileNo,
+        password: password,
+      })
       .then((response) => {
-        localStorage.setItem("user", response.data);
+        localStorage.setItem("user", response.data.token);
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +48,7 @@ function LoginPage({ onClick }) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <span className="text-center my-3">
+          {/* <span className="text-center my-3">
             Don't have an account ?
             <a
               href="#"
@@ -54,13 +57,10 @@ function LoginPage({ onClick }) {
             >
               Register here
             </a>
-          </span>
+          </span> */}
 
           <div className="text-center my-4">
-            <button
-              onClick={(e) => handleSubmit()}
-              className="btn btn-danger mx-2"
-            >
+            <button onClick={handleSubmit()} className="btn btn-danger mx-2">
               Submit
             </button>
             <button onClick={onClick} className="btn btn-light mx-2">

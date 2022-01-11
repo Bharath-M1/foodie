@@ -1,13 +1,16 @@
 import axios from "../utils/axios";
 import React, { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
-import { Row, Col, Card } from "reactstrap";
+import { Row, Col, Card, Toast } from "reactstrap";
+import { successToast } from "../utils/toast";
 
 function StoreDetails() {
   const { id } = useParams();
   const [store, setStore] = useState({});
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [user, setUser] = useState();
   // console.log(storeId, id, "this");
 
   useEffect(() => {
@@ -27,8 +30,13 @@ function StoreDetails() {
 
   const getStore = () => {
     console.log("Hello");
+    const loggedUser = localStorage.getItem("user");
+    const decodeUser = jwt_decode(loggedUser);
+    setUser(decodeUser.id);
     axios
-      .post("/getOne", { id })
+      .post("/getOne", {
+        id,
+      })
       .then((response) => {
         console.log(response.data);
         setStore(response.data);
@@ -38,13 +46,15 @@ function StoreDetails() {
 
   const addToCart = (product) => {
     console.log(product);
-    const products = JSON.parse(localStorage.getItem("products"));
-
-    products.push(product);
-
-    localStorage.removeItem("products");
-
-    localStorage.setItem("products", JSON.stringify(products));
+    axios
+      .post("/cart", { user: user, product: product._id })
+      .then((response) => {
+        console.log(response);
+        successToast(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const renderProducts = products.map((product) => (

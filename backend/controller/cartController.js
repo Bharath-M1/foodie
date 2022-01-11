@@ -3,18 +3,20 @@ const User = require("../model/user");
 const Product = require("../model/products");
 
 exports.addCart = (req, res) => {
+  console.log(req.body);
   Product.findOne({ _id: req.body.product })
     .then((product) => {
       User.findOne({ _id: req.body.user }).then((user) => {
         Cart.find({ product: product._id, user: user._id }).then((cart) => {
-          if (cart) {
+          if (cart === []) {
           } else {
             Cart.create({
               user: user._id,
               product: product._id,
               qty: 1,
-              price: product.price,
-            }).then((cart) => {
+              price: product.rate,
+            }).then((data) => {
+              console.log(data);
               res.send("Added to Cart");
             });
           }
@@ -27,7 +29,7 @@ exports.addCart = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-  Cart.find({})
+  Cart.find({ user: req.body.user })
     .populate("user")
     .populate("product")
     .then((cart) => {
