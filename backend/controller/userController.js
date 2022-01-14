@@ -63,23 +63,26 @@ exports.login = (req, res) => {
   user
     .findOne({ mobileNo: req.body.mobileNo })
     .then(async (data) => {
-      console.log(data);
-      const authUser = await bcrypt.compareSync(password, data.password);
-      if (authUser) {
-        const token = jwt.sign(
-          { id: data._id, role: data.role },
-          process.env.SECRET,
-          { algorithm: "HS256" }
-        );
-        res.header("Bearer", token);
-        res.json({
-          token: "Bearer " + token,
-          data: data,
-          status: "ok",
-          message: "Successfully logged in",
-        });
+      if (!data) {
+        res.json({ message: "Username not Found", status: "err" });
       } else {
-        res.json({ message: "In correct Password", status: "err" });
+        const authUser = await bcrypt.compareSync(password, data.password);
+        if (authUser) {
+          const token = jwt.sign(
+            { id: data._id, role: data.role },
+            process.env.SECRET,
+            { algorithm: "HS256" }
+          );
+          res.header("Bearer", token);
+          res.json({
+            token: "Bearer " + token,
+            data: data,
+            status: "ok",
+            message: "Successfully logged in",
+          });
+        } else {
+          res.json({ message: "In correct Password", status: "err" });
+        }
       }
     })
     .catch((err) => res.json({ status: "err", err: err.message }));

@@ -46,9 +46,6 @@ function Header() {
     ) : (
       <div className="nav_items">
         {" "}
-        <a className="nav_link" href="/cart">
-          <FiShoppingCart className="cart_icon" size={25} />
-        </a>
         <a onClick={() => setloginModal(true)} className="nav_link">
           Signin
         </a>
@@ -69,13 +66,6 @@ function Header() {
           </div>
           <div className="nav_items">{renderButtons}</div>
         </Container>
-      </div>
-
-      {/* Mobile Nav Bar */}
-      <div className="mobile_nav">
-        <GiHamburgerMenu className="mobile_nav_menu" />
-        <h2 className="mobile_nav_logo">Foodie</h2>
-        <GiHamburgerMenu className="sample_menu" />
       </div>
 
       {/* Signin and Signup Modal */}

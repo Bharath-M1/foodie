@@ -1,8 +1,13 @@
 /* <------- Styles for Headers ------> */
 
 .navbar {
-  display: none;
-  
+  /* position: fixed; */
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #7f000e;
 }
 
 .nav_link {
@@ -60,7 +65,7 @@
   visibility: hidden;
 }
 
-@media (min-width: 576px) and (max-width: 767px) {
+/* @media (min-width: 576px) and (max-width: 767px) {
   .navbar {
     display: none;
   }
@@ -116,16 +121,8 @@
 }
 
 @media (min-width: 1400px) {
-  .navbar {
-    position: fixed;
-    top: 0;
-    z-index: 50;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background-color: #7f000e;
-  }
+
   .mobile_nav {
     display: none;
   }
-}
+} */

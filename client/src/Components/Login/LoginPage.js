@@ -1,24 +1,37 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import myaxios from "../utils/axios";
 import "./loginStyles.css";
 
 function LoginPage({ onClick }) {
   const [mobileNo, setMobileNo] = useState();
   const [password, setPassword] = useState();
 
-  const handleSubmit = () => {
-    axios
-      .post("/home/login", {
-        mobileNo: mobileNo,
-        password: password,
-      })
-      .then((response) => {
-        localStorage.setItem("user", response.data.token);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (mobileNo === "" || password === "") {
+      alert("Fill out all the fields");
+    } else {
+      myaxios
+        .post("/login", {
+          mobileNo: mobileNo,
+          password: password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (
+            response.data.message === "In correct Password" ||
+            response.data.message === "Username not Found"
+          ) {
+            alert("Incorrect Username or Password");
+          } else {
+            localStorage.setItem("user", response.data.token);
+            window.location = "/";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   return (
     <div>
@@ -33,7 +46,9 @@ function LoginPage({ onClick }) {
               className="input_field"
               placeholder="Enter Your mobile number"
               value={mobileNo}
-              onChange={(e) => setMobileNo(e.target.value)}
+              onChange={(e) => {
+                setMobileNo(e.target.value);
+              }}
             />
           </div>
 
@@ -48,19 +63,12 @@ function LoginPage({ onClick }) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {/* <span className="text-center my-3">
-            Don't have an account ?
-            <a
-              href="#"
-              className="mx-1 text-decoration-none"
-              style={{ color: "#7F000E" }}
-            >
-              Register here
-            </a>
-          </span> */}
 
           <div className="text-center my-4">
-            <button onClick={handleSubmit()} className="btn btn-danger mx-2">
+            <button
+              onClick={(e) => handleSubmit(e)}
+              className="btn btn-danger mx-2"
+            >
               Submit
             </button>
             <button onClick={onClick} className="btn btn-light mx-2">

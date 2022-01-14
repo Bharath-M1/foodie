@@ -7,9 +7,8 @@ exports.addCart = (req, res) => {
   Product.findOne({ _id: req.body.product })
     .then((product) => {
       User.findOne({ _id: req.body.user }).then((user) => {
-        Cart.find({ product: product._id, user: user._id }).then((cart) => {
-          if (cart === []) {
-          } else {
+        Cart.findOne({ product: product._id, user: user._id }).then((cart) => {
+          if (cart === null) {
             Cart.create({
               user: user._id,
               product: product._id,
@@ -19,6 +18,7 @@ exports.addCart = (req, res) => {
               console.log(data);
               res.send("Added to Cart");
             });
+          } else {
           }
         });
       });
@@ -34,6 +34,35 @@ exports.getAll = (req, res) => {
     .populate("product")
     .then((cart) => {
       res.send(cart);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.updateCart = async (req, res) => {
+  await Cart.findOneAndUpdate(
+    { _id: req.body.cart },
+    {
+      $set: {
+        qty: req.body.quantity,
+        price: req.body.price,
+      },
+    }
+  )
+    .then((data) => {
+      res.json({ messsage: "updated", status: "success" });
+    })
+    .catch((err) => {
+      res.json({ messag: "error", status: "error" });
+    });
+};
+
+exports.deleteItem = (req, res) => {
+  console.log(req.params.id);
+  Cart.remove({ _id: req.params.id })
+    .then((data) => {
+      res.send("Item removed from Cart");
     })
     .catch((err) => {
       console.log(err);

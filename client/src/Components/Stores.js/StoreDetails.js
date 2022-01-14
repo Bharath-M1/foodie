@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import { Row, Col, Card, Toast } from "reactstrap";
 import { successToast } from "../utils/toast";
+import myaxios from "../utils/axios";
 
 function StoreDetails() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function StoreDetails() {
     const loggedUser = localStorage.getItem("user");
     const decodeUser = jwt_decode(loggedUser);
     setUser(decodeUser.id);
-    axios
+    myaxios
       .post("/getOne", {
         id,
       })
@@ -46,11 +47,14 @@ function StoreDetails() {
 
   const addToCart = (product) => {
     console.log(product);
-    axios
+    myaxios
       .post("/cart", { user: user, product: product._id })
       .then((response) => {
         console.log(response);
         successToast(response.data);
+        setTimeout(() => {
+          window.location = "/cart";
+        }, 500);
       })
       .catch((err) => {
         console.log(err);
