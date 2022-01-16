@@ -1,20 +1,30 @@
-const mongoose = require("mongoose")
-const store = require('../model/store')
-const product = require('../model/products')
-const user = require('../model/user')
-const schema = mongoose.Schema
+const mongoose = require("mongoose");
+const store = require("../model/store");
+const product = require("../model/products");
+const user = require("../model/user");
+const schema = mongoose.Schema;
 
 const orderSchema = mongoose.Schema({
   userId: { require: true, type: schema.Types.ObjectId, ref: user },
-  products: [{
-    productId: {
-      require: true, type: schema.Types.ObjectId, ref: product
+  products: [
+    {
+      productId: {
+        require: true,
+        type: schema.Types.ObjectId,
+        ref: product,
+      },
+      quantity: { type: Number, require: true },
     },
-    quantity: { type: Number, require: true }
-  }],
+  ],
+  orderId: {
+    type: Number,
+    default: () => {
+      return Math.floor(Math.random() * 70000 * Math.random()) + 30000;
+    },
+  },
   // products: { type: Array, require: true },
   storeId: { require: true, type: schema.Types.ObjectId, ref: store },
-  billvalue: { type: Number, require: true }
-})
+  billvalue: { type: Number, require: true },
+});
 
-module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model("order", orderSchema);

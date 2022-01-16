@@ -2,15 +2,17 @@ import axios from "../utils/axios";
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
-import { Row, Col, Card, Toast } from "reactstrap";
-import { successToast } from "../utils/toast";
+import { Row, Col, Card, Modal, ModalBody } from "reactstrap";
+import { successToast, warningToast } from "../utils/toast";
 import myaxios from "../utils/axios";
 
 function StoreDetails() {
   const { id } = useParams();
   const [store, setStore] = useState({});
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [orderObj, setOrderObj] = useState({});
+  const [qty, setQty] = useState([]);
   const [user, setUser] = useState();
   // console.log(storeId, id, "this");
 
@@ -50,17 +52,100 @@ function StoreDetails() {
     myaxios
       .post("/cart", { user: user, product: product._id })
       .then((response) => {
-        console.log(response);
-        successToast(response.data);
-        setTimeout(() => {
-          window.location = "/cart";
-        }, 500);
+        if (response.data === "Added to Cart") {
+          successToast(response.data);
+          setTimeout(() => {
+            window.location = "/cart";
+          }, 500);
+        } else {
+          console.log(response.data);
+          setTimeout(() => {
+            window.location = "/cart";
+          }, 500);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const toggleModal = (quantity, productId, storeId, price) => {
+    setModal(!modal);
+    renderQuantity(quantity);
+    setOrderObj({
+      product: productId,
+      store: storeId,
+      rate: price,
+    });
+  };
+
+  const renderQuantity = (quantity) => {
+    var array = [];
+    var total = 0;
+    if (quantity >= 10) {
+      total = 10;
+    } else {
+      total = quantity;
+    }
+
+    for (let i = 1; i <= total; i++) {
+      array.push(i);
+    }
+
+    setQty(array);
+    console.log(qty);
+  };
+
+  const placeOrder = (quantity) => {
+    var total = 0;
+    total = orderObj.rate * quantity;
+
+    if (!localStorage.getItem("user")) {
+      alert("Please Login");
+      setTimeout(() => {
+        window.location = "/";
+      }, 100);
+    }
+
+    const loggedUser = localStorage.getItem("user");
+    const decodeUser = jwt_decode(loggedUser);
+
+    myaxios
+      .post("/order", {
+        products: [
+          {
+            productId: orderObj.product,
+            quantity: quantity,
+          },
+        ],
+        storeId: orderObj.store,
+        userId: decodeUser.id,
+        billvalue: total,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (
+          response.data.msg === "insufficient balance" ||
+          response.data.msg === "insufficient quantity" ||
+          response.data.msg === "There was a problem creating the user."
+        ) {
+          warningToast(
+            "Unable to Place Order.Please check your balance and quantity"
+          );
+          setTimeout(() => {
+            window.location = "/";
+          }, 2000);
+        } else {
+          successToast("successfully order created");
+          setTimeout(() => {
+            window.location = "/order";
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const renderProducts = products.map((product) => (
     <Card className="my-4 p-4">
       <Row>
@@ -97,7 +182,19 @@ function StoreDetails() {
               ))}
             </span>
           </p>
-          <button className="btn w-5 mx-1 bg-success text-white">Order</button>
+          <button
+            onClick={() =>
+              toggleModal(
+                product.quantity,
+                product._id,
+                product.store,
+                product.rate
+              )
+            }
+            className="btn w-5 mx-1 bg-success text-white"
+          >
+            Order
+          </button>
           <button
             onClick={() => addToCart(product)}
             className="btn w-5 mx-1 bg-primary text-white"
@@ -121,6 +218,25 @@ function StoreDetails() {
         <span className="clearfix"></span>
       </div>
       <div>{renderProducts}</div>
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalBody>
+          <h5>Select Quantity</h5>
+          {qty.length === []
+            ? () => {
+                return <h1>"Out of Stock"</h1>;
+              }
+            : qty.map((value) => {
+                return (
+                  <button
+                    onClick={() => placeOrder(value)}
+                    className="btn mx-1 rounded-full border border-dark"
+                  >
+                    {value}
+                  </button>
+                );
+              })}
+        </ModalBody>
+      </Modal>
     </div>
   );
 }

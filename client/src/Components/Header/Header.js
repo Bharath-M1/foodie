@@ -15,17 +15,23 @@ import "./styles.css";
 import LoginPage from "../Login/LoginPage";
 import Signupform from "../Register/Signupform";
 import { successToast } from "../utils/toast";
+import axios from "axios";
+import myaxios from "../utils/axios";
 
 function Header() {
   const [loginModal, setloginModal] = useState(false);
   const [signupModal, setsignUpModal] = useState(false);
   const [userType, setUserType] = useState();
+  const [balance, setBalance] = useState();
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
       const user = localStorage.getItem("user");
       const decode = jwt_decode(user);
       setUserType(decode.role);
+      myaxios.post("/getUser", { id: decode.id }).then((response) => {
+        setBalance(response.data.balance);
+      });
     }
   });
 
@@ -38,6 +44,10 @@ function Header() {
       <div className="nav_items">
         <a className="nav_link" href="/cart">
           <FiShoppingCart className="cart_icon" size={25} />
+        </a>
+
+        <a className="text-white fw-bold text-decoration-none">
+          Wallet :&#8377; {balance}
         </a>
         <a className="nav_link" onClick={() => logOut()}>
           Logout

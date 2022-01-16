@@ -19,6 +19,7 @@ exports.addCart = (req, res) => {
               res.send("Added to Cart");
             });
           } else {
+            res.send("product exists");
           }
         });
       });

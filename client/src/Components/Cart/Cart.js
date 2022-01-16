@@ -52,8 +52,15 @@ function Cart() {
 
   const renderQuantity = (quantity) => {
     const array = [];
+    var total = 0;
 
-    for (let i = 1; i <= quantity; i++) {
+    if (quantity <= 10) {
+      total = quantity;
+    } else {
+      total = 10;
+    }
+
+    for (let i = 1; i <= total; i++) {
       array.push(i);
     }
 
@@ -92,11 +99,24 @@ function Cart() {
 
   const Order = (productId, storeId, userId, quantity, billvalue) => {
     myaxios
-      .post("/order", { productId, storeId, userId, quantity, billvalue })
+      .post("/order", {
+        products: [
+          {
+            productId: productId,
+            quantity: quantity,
+          },
+        ],
+        storeId,
+        userId,
+
+        billvalue,
+      })
       .then((response) => {
+        console.log(response.data);
         if (
           response.data.msg === "insufficient balance" ||
-          response.data.msg === "insufficient quantity"
+          response.data.msg === "insufficient quantity" ||
+          response.data.msg === "There was a problem creating the user."
         ) {
           warningToast(
             "Unable to Place Order.Please check your balance and quantity"
@@ -104,8 +124,11 @@ function Cart() {
           setTimeout(() => {
             window.location = "/cart";
           }, 2000);
-        } else if (response.data.msg === "successfully order created") {
-          warningToast("Insufficient Quantity");
+        } else {
+          successToast("successfully order created");
+          setTimeout(() => {
+            window.location = "/order";
+          }, 2000);
         }
       })
       .catch((err) => {

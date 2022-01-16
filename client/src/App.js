@@ -11,6 +11,7 @@ import PageNotFound from "./Components/PageNotFound/PageNotFound";
 import StoreDetails from "./Components/Stores.js/StoreDetails";
 import Footer from "./Components/Footer/Footer";
 import Cart from "./Components/Cart/Cart";
+import Order from "./Components/Order/Order";
 
 function App() {
   const bounce = cssTransition({
@@ -39,6 +40,7 @@ function App() {
             )}
 
             <Route exact path="/store" element={<Store />} />
+            <Route exact path="/order" element={<Order />} />
           </Routes>
         </Container>
         <Footer />

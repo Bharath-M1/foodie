@@ -69,7 +69,7 @@ exports.login = (req, res) => {
         const authUser = await bcrypt.compareSync(password, data.password);
         if (authUser) {
           const token = jwt.sign(
-            { id: data._id, role: data.role },
+            { id: data._id, role: data.role, balance: data.balance },
             process.env.SECRET,
             { algorithm: "HS256" }
           );
@@ -86,4 +86,15 @@ exports.login = (req, res) => {
       }
     })
     .catch((err) => res.json({ status: "err", err: err.message }));
+};
+
+exports.getUser = (req, res) => {
+  user
+    .findOne({ _id: req.body.id })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
