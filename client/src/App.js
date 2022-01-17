@@ -21,7 +21,11 @@ function App() {
 
   const User = ({ match }) => {};
 
-  const Admin = ({ match }) => {};
+  const Admin = ({ match }) => {
+    // <Routes>
+    //   <Route path={`/admin/home`} exact={true} element={<HomePage />} />
+    // </Routes>;
+  };
   const Store = ({ match }) => {};
   return (
     <div>
@@ -35,10 +39,9 @@ function App() {
             <Route exact path="/stores/:id" element={<StoreDetails />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/user" element={<User />} />
-            {!localStorage.getItem("role") == "student" && (
+            {!localStorage.getItem("role") === "student" && (
               <Route exact path="/admin" element={<Admin />} />
             )}
-
             <Route exact path="/store" element={<Store />} />
             <Route exact path="/order" element={<Order />} />
           </Routes>

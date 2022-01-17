@@ -37,6 +37,7 @@ function Header() {
 
   const logOut = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("role");
     window.location = "/";
   };
   const renderButtons =

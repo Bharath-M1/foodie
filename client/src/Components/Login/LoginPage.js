@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import myaxios from "../utils/axios";
+import jwt_decode from "jwt-decode";
 import "./loginStyles.css";
 
 function LoginPage({ onClick }) {
@@ -25,6 +26,9 @@ function LoginPage({ onClick }) {
             alert("Incorrect Username or Password");
           } else {
             localStorage.setItem("user", response.data.token);
+            const loggedUser = localStorage.getItem("user");
+            const decodeUser = jwt_decode(loggedUser);
+            localStorage.setItem("role", decodeUser.role);
             window.location = "/";
           }
         })
