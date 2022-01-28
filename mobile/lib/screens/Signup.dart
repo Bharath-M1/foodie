@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodie/screens/Login.dart';
 import 'package:foodie/utils/const.dart';
+import 'package:foodie/utils/user_repository.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
 
@@ -13,6 +16,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
+  TextEditingController phoneNo = TextEditingController();
   TextEditingController regNo = TextEditingController();
   TextEditingController dept = TextEditingController();
   TextEditingController dob = TextEditingController();
@@ -61,16 +65,25 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Widget formContent() {
     void signup() async {
-      // BlocProvider.of<SignupBloc>(context).add(
-      //   SignupButtonPressed(
-      //     firstName: firstName.text,
-      //     lastName: lastName.text,
-      //     dateofbirth: dob.text,
-      //     userName: username.text,
-      //     email: email.text,
-      //     password: password.text,
-      //   ),
-      // );
+      var res = await UserRepository.signup(
+        username.text,
+        regNo.text,
+        int.parse(phoneNo.text),
+        password.text,
+        email.text,
+        dob.text,
+        gender.text,
+        address.text,
+        dept.text,
+      );
+      if (res != null) {
+        if (res["status"] == "ok") {
+          Fluttertoast.showToast(msg: "Signup Successful");
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (builder) => LoginPage()),
+              (route) => false);
+        }
+      }
     }
 
     return Form(
@@ -113,6 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
             // ),
             usernameTF(),
             regNoTF(),
+            phoneNoTF(),
             deptTF(),
             emailTF(),
             dateofbirth(),
@@ -331,6 +345,48 @@ class _SignupScreenState extends State<SignupScreen> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: MultiValidator([
             RequiredValidator(errorText: "Username is Required"),
+            // PatternValidator(r"(?:[^a-z][a-z])",
+            //     errorText: 'Username must be in lower case without white space')
+          ])),
+    );
+  }
+
+  Widget phoneNoTF() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.phone,
+          controller: phoneNo,
+          cursorColor: primaryColor,
+          // onSaved: (value) => username = value,
+          decoration: InputDecoration(
+            labelText: "Phone Number",
+            labelStyle: TextStyle(color: primaryColor),
+            hintText: 'Phone Number',
+            prefixIcon: Icon(
+              Icons.star,
+              color: primaryColor,
+              size: 10,
+            ),
+            hintStyle: TextStyle(color: Colors.grey),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(color: primaryColor, width: 1),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(color: primaryColor, width: 1.5),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderSide: BorderSide(color: primaryColor),
+            ),
+          ),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: MultiValidator([
+            MinLengthValidator(10, errorText: 'Enter a valid phone number'),
+            RequiredValidator(errorText: "Phone Number is Required"),
             // PatternValidator(r"(?:[^a-z][a-z])",
             //     errorText: 'Username must be in lower case without white space')
           ])),
@@ -605,8 +661,8 @@ class _SignupScreenState extends State<SignupScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: MultiValidator([
           RequiredValidator(errorText: 'Password is required'),
-          MinLengthValidator(8,
-              errorText: 'Password must be at least 8 digits long'),
+          MinLengthValidator(6,
+              errorText: 'Password must be at least 6 digits long'),
           PatternValidator(r'(?=.*?[#?!@$%^&*-])',
               errorText: 'Passwords must have at least one special character')
         ]),
