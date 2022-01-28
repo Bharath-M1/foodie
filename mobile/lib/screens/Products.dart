@@ -104,7 +104,8 @@ class _ProductScreeenState extends State<ProductScreeen> {
                         ],
                         image: DecorationImage(
                           image: NetworkImage(
-                            widget.store['imageUrl'],
+                            // widget.store['imageUrl'],
+                            "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/uuqtjieoqe2n2tpzwdec",
                           ),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
@@ -112,7 +113,7 @@ class _ProductScreeenState extends State<ProductScreeen> {
                         ),
                       ),
                       child: Text(
-                        widget.store['name'],
+                        widget.store['storeName'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: solidWhite,
@@ -261,7 +262,7 @@ class _ProductScreeenState extends State<ProductScreeen> {
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                 image: NetworkImage(
-                  widget.store['imageUrl'],
+                  "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/uuqtjieoqe2n2tpzwdec",
                 ),
                 fit: BoxFit.cover,
                 // colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),

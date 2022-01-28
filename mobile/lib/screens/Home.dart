@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodie/screens/Products.dart';
 import 'package:foodie/utils/const.dart';
 import 'package:foodie/utils/custompainter.dart';
+import 'package:foodie/utils/user_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,39 +15,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // late Future stores;
+  late Future<List> stores;
 
   @override
   void initState() {
-    // stores = getStores();
+    stores = UserRepository.getStores();
+    Fluttertoast.showToast(msg: "Welcome");
     super.initState();
   }
 
-  // Future getStores() {
-  // }
-
-  List stores = [
-    {
-      "imageUrl":
-          "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/uuqtjieoqe2n2tpzwdec",
-      "name": "Blue Line Restaurant",
-    },
-    {
-      "imageUrl":
-          "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/nn6j25gik17vhe0j14b8",
-      "name": "SS Hyderabad Briyani",
-    },
-    {
-      "imageUrl":
-          "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/fba8d1ivvwasnfrxgl4o",
-      "name": "KCM",
-    },
-    {
-      "imageUrl":
-          "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/bkhjsivteg9eqkqjpopf",
-      "name": "Ocean Drive in Q",
-    }
-  ];
+  // List stores = [
+  //   {
+  //     "imageUrl":
+  //         "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/uuqtjieoqe2n2tpzwdec",
+  //     "name": "Store 1",
+  //   },
+  //   {
+  //     "imageUrl":
+  //         "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/nn6j25gik17vhe0j14b8",
+  //     "name": "Store 2",
+  //   },
+  //   {
+  //     "imageUrl":
+  //         "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/fba8d1ivvwasnfrxgl4o",
+  //     "name": "Store 3",
+  //   },
+  //   {
+  //     "imageUrl":
+  //         "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/bkhjsivteg9eqkqjpopf",
+  //     "name": "Store 4",
+  //   }
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,28 +85,45 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      // height: size.height - 300,
-                      width: size.width,
-                      margin: EdgeInsets.symmetric(vertical: 15),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (builder) =>
-                                        ProductScreeen(store: stores[index]),
-                                  ),
-                                );
+                    FutureBuilder<List>(
+                      future: stores,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child:
+                                Text("Something went wrong! Try again later."),
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          var store = snapshot.data;
+                          return Container(
+                            // height: size.height - 300,
+                            width: size.width,
+                            margin: EdgeInsets.symmetric(vertical: 15),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (builder) => ProductScreeen(
+                                              store: store![index]),
+                                        ),
+                                      );
+                                    },
+                                    child: storesWidget(store![index]));
                               },
-                              child: storesWidget(index));
-                        },
-                      ),
+                            ),
+                          );
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -140,7 +157,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget storesWidget(int index) {
+  Widget storesWidget(var store) {
     Size size = MediaQuery.of(context).size;
     return Container(
       // height: 150,
@@ -169,7 +186,9 @@ class _HomePageState extends State<HomePage> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                imageUrl: stores[index]['imageUrl'],
+                // imageUrl: store['imageUrl'],
+                imageUrl:
+                    "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/uuqtjieoqe2n2tpzwdec",
                 fit: BoxFit.cover,
               ),
             ),
@@ -187,7 +206,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 width: size.width - 175,
                 child: Text(
-                  stores[index]['name'],
+                  store['storeName'],
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
