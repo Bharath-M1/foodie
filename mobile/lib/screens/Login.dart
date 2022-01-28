@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foodie/screens/BottomNavBar.dart';
 import 'package:foodie/screens/Signup.dart';
 import 'package:foodie/utils/const.dart';
+import 'package:foodie/utils/user_repository.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,9 +58,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget formContent() {
-    void login() {
-      print(phoneNo);
-      print(password);
+    void login() async {
+      var res = await UserRepository.login(phoneNo, password);
+      if (res != null) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (builder) => BottomNavBar()),
+            (route) => false);
+      }
     }
 
     return Form(
