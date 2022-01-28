@@ -1,0 +1,17 @@
+POST  http://localhost:5000/signup
+
+{
+      "name": "brad",
+      "mobileNo": "9566619610",
+      "password": "qwerty",
+      "email": "brad@test.com",
+      "dateOfBirth": "09-11-1997",
+      "gender": "male",
+      "address": {
+        "pincode": "641130",
+        "doorNo": "8/14",
+        "addressLine1": "destor",
+        "addressLine2":"miami"
+      }
+      
+    }
