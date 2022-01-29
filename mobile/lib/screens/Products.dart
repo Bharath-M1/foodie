@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodie/screens/BottomNavBar.dart';
 import 'package:foodie/utils/const.dart';
+import 'package:foodie/utils/user_repository.dart';
 
 class ProductScreeen extends StatefulWidget {
   final store;
@@ -12,10 +13,12 @@ class ProductScreeen extends StatefulWidget {
 }
 
 class _ProductScreeenState extends State<ProductScreeen> {
+  late Future<List> products;
   @override
   void initState() {
-    productTypes = products.map((e) => e['type']).toList();
-    productTypes = productTypes.toSet().toList();
+    // productTypes = products.map((e) => e['type']).toList();
+    // productTypes = productTypes.toSet().toList();
+    products = UserRepository.getProducts(widget.store['_id']);
     super.initState();
   }
 
@@ -25,25 +28,33 @@ class _ProductScreeenState extends State<ProductScreeen> {
 
   List productTypes = [];
 
-  List products = [
-    {
-      "type": "Bakery items",
-      "name": "Methu vadai",
-      "rate": "5",
-      "varient": "Hot"
-    },
-    {
-      "type": "Bakery items",
-      "name": "Parappu vadai",
-      "rate": "5",
-      "varient": "Hot"
-    },
-    {"type": "Bakery items", "name": "Bonda", "rate": "5", "varient": "Hot"},
-    {"type": "Breakfast", "name": "Idli set", "rate": "15", "varient": "Hot"},
-    {"type": "Breakfast", "name": "Dosa", "rate": "10", "varient": "Hot"},
-    {"type": "Beverages", "name": "Pepsi", "rate": "12", "varient": "Cold"},
-    {"type": "Beverages", "name": "Cocacola", "rate": "12", "varient": "Cold"},
-  ];
+  // List products = [
+  //   {
+  //       "ingredients": [],
+  //       "_id": "61f402e99800e01944bfefae",
+  //       "productName": "Samosa",
+  //       "quantity": "50",
+  //       "store": "61a9b58121b5e83d98056a2e",
+  //       "type": "Eatables",
+  //       "varient": "Hot",
+  //       "category": "veg",
+  //       "rate": 15,
+  //       "createdAt": "2022-01-28T14:51:21.324Z",
+  //       "updatedAt": "2022-01-28T14:51:21.324Z",
+  //       "__v": 0
+  //   },
+  //   {
+  //     "type": "Bakery items",
+  //     "name": "Parappu vadai",
+  //     "rate": "5",
+  //     "varient": "Hot"
+  //   },
+  //   {"type": "Bakery items", "name": "Bonda", "rate": "5", "varient": "Hot"},
+  //   {"type": "Breakfast", "name": "Idli set", "rate": "15", "varient": "Hot"},
+  //   {"type": "Breakfast", "name": "Dosa", "rate": "10", "varient": "Hot"},
+  //   {"type": "Beverages", "name": "Pepsi", "rate": "12", "varient": "Cold"},
+  //   {"type": "Beverages", "name": "Cocacola", "rate": "12", "varient": "Cold"},
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -122,43 +133,62 @@ class _ProductScreeenState extends State<ProductScreeen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: productTypes.length,
-                        itemBuilder: (context, index) {
-                          var product = [...products];
-                          product.retainWhere((element) =>
-                              element['type'] == productTypes[index]);
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: ExpansionTile(
-                                initiallyExpanded: true,
-                                backgroundColor: solidWhite,
-                                collapsedBackgroundColor: solidWhite,
-                                collapsedIconColor: secondaryColor,
-                                collapsedTextColor: secondaryColor,
-                                textColor: secondaryColor,
-                                iconColor: secondaryColor,
-                                childrenPadding:
-                                    EdgeInsets.symmetric(horizontal: 15),
-                                title: Text(
-                                  productTypes[index],
-                                  style: TextStyle(
-                                    color: secondaryColor,
-                                    fontFamily: "proximanova",
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                children: List.generate(
-                                  product.length,
-                                  (index2) => productList(product, index2),
-                                ),
-                              ),
-                            ),
+                    FutureBuilder<List>(
+                        future: products,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                  "Something went wrong! Try again later."),
+                            );
+                          }
+                          if (snapshot.hasData) {
+                            productTypes =
+                                snapshot.data!.map((e) => e['category']).toList();
+                            productTypes = productTypes.toSet().toList();
+                            return ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: productTypes.length,
+                                itemBuilder: (context, index) {
+                                  var product = [...?snapshot.data];
+                                  product.retainWhere((element) =>
+                                      element['category'] == productTypes[index]);
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: ExpansionTile(
+                                        initiallyExpanded: true,
+                                        backgroundColor: solidWhite,
+                                        collapsedBackgroundColor: solidWhite,
+                                        collapsedIconColor: secondaryColor,
+                                        collapsedTextColor: secondaryColor,
+                                        textColor: secondaryColor,
+                                        iconColor: secondaryColor,
+                                        childrenPadding: EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        title: Text(
+                                          productTypes[index],
+                                          style: TextStyle(
+                                            color: secondaryColor,
+                                            fontFamily: "proximanova",
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        children: List.generate(
+                                          product.length,
+                                          (index2) =>
+                                              productList(product, index2),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                });
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
                         })
                   ],
@@ -275,7 +305,7 @@ class _ProductScreeenState extends State<ProductScreeen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product[index]['name'],
+                product[index]['productName'],
                 style: TextStyle(
                   color: secondaryColor,
                   fontFamily: "proximanova",
