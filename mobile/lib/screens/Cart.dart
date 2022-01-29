@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodie/screens/Login.dart';
 import 'package:foodie/utils/const.dart';
+import 'package:foodie/utils/storage_manager.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -142,12 +143,15 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (builder) => LoginPage(),
-                      ),
-                    );
+                  onPressed: () async {
+                    var isLogin = await StorageManager.readData('token');
+                    if (isLogin == null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (builder) => LoginPage(),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     alignment: Alignment.center,
