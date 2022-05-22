@@ -10,6 +10,10 @@ const createStore = mongoose.Schema(
       type: Number,
       require: true,
     },
+    banner:{
+      type:String,
+      require:false,
+    }
     // items: {
     //   type: Object,
     //   requ

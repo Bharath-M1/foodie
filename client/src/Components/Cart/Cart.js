@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col } from "reactstrap";
-import { Router } from "react-router";
 import jwt_decode from "jwt-decode";
 import myaxios from "../utils/axios";
 import { toast } from "react-toastify";
@@ -17,11 +16,8 @@ function Cart() {
         window.location = "/";
       }, 100);
     }
-
     const loggedUser = localStorage.getItem("user");
     const decodeUser = jwt_decode(loggedUser);
-
-    console.log(decodeUser.id);
     myaxios
       .post("/getCart", { user: decodeUser.id })
       .then((cart) => {

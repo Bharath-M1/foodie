@@ -3,6 +3,7 @@ import { Row,Col,Button } from 'reactstrap'
 // import { getProfile } from './../UserFunctions/UserFunctions';
 import jwt_decode from 'jwt-decode'
 import myaxios from '../utils/axios'
+import { Card } from "reactstrap";
 
 
 
@@ -92,6 +93,7 @@ class Profile extends Component {
   render() {
     return (
       <div className="container">
+        <Card className="pb-5 p-3 shadow ">
         <div className="jumbotron mt-5">
           <div className="col-sm-8 mx-auto">
             <h1 className="text-center">PROFILE</h1>
@@ -127,6 +129,7 @@ class Profile extends Component {
             <Col><Button variant="outline-dark" href="/update">EDIT</Button></Col>
           </Row>
         </div>
+        </Card>
       </div>
     )
   }

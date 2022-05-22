@@ -25,7 +25,7 @@ const store = require("../model/store");
 exports.create = (req, res) => {
   console.log;
   store
-    .findOne({ storeName: req.body.store })
+    .findOne({ _id: req.body.store })
     .then((value) => {
       console.log(value);
       products
@@ -149,6 +149,18 @@ exports.getProductsbyStore = (req, res) => {
         .catch((err) => {
           console.log(err);
         });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.delete = (req, res) => {
+
+  products
+    .deleteOne({ _id: req.params.id })
+    .then((data) => {
+      res.send("Product Deleted");
     })
     .catch((err) => {
       console.log(err);

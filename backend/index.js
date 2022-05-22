@@ -1,4 +1,5 @@
 const cors = require("cors");
+const fileupload = require("express-fileupload");
 const passport = require("passport");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");

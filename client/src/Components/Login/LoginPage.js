@@ -18,22 +18,24 @@ function LoginPage({ onClick }) {
           password: password,
         })
         .then((response) => {
-          console.log(response.data);
+          
           if (
             response.data.message === "In correct Password" ||
             response.data.message === "Username not Found"
           ) {
             alert("Incorrect Username or Password");
           } else {
-            localStorage.setItem("user", response.data.token);
-            const loggedUser = localStorage.getItem("user");
-            const decodeUser = jwt_decode(loggedUser);
-            localStorage.setItem("role", decodeUser.role);
-
-            if (decodeUser.role === "admin") {
-              window.location = "/admin";
+            var user=response.data.data
+            if (user.role === "admin") {
+              alert("Incorrect Username or password");
+              
             } else {
-              window.location = "/";
+              localStorage.setItem("user", response.data.token);
+              const loggedUser = localStorage.getItem("user");
+              const decodeUser = jwt_decode(loggedUser);
+              localStorage.setItem("role", decodeUser.role);
+              window.location="/"
+  
             }
           }
         })

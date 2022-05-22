@@ -58,7 +58,7 @@ exports.updateUser = (req, res) => {
 
 //logining in student
 exports.login = (req, res) => {
-  console.log(req.body);
+  
   let password = req.body.password;
   user
     .findOne({ mobileNo: req.body.mobileNo })

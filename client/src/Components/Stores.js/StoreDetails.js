@@ -2,7 +2,7 @@ import axios from "../utils/axios";
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useParams } from "react-router-dom";
-import { Row, Col, Card, Modal, ModalBody } from "reactstrap";
+import { Row, Col, Card, Modal, ModalBody,Container } from "reactstrap";
 import { successToast, warningToast } from "../utils/toast";
 import myaxios from "../utils/axios";
 
@@ -10,8 +10,10 @@ function StoreDetails() {
   const { id } = useParams();
   const [store, setStore] = useState({});
   const [products, setProducts] = useState([]);
+  // const []
   const [modal, setModal] = useState(false);
   const [orderObj, setOrderObj] = useState({});
+  const[orders,setOrders]=useState([])
   const [qty, setQty] = useState([]);
   const [user, setUser] = useState();
   // console.log(storeId, id, "this");
@@ -32,7 +34,7 @@ function StoreDetails() {
   }, []);
 
   const getStore = () => {
-    console.log("Hello");
+  
     const loggedUser = localStorage.getItem("user");
     const decodeUser = jwt_decode(loggedUser);
     setUser(decodeUser.id);
@@ -41,7 +43,7 @@ function StoreDetails() {
         id,
       })
       .then((response) => {
-        console.log(response.data);
+        
         setStore(response.data);
       })
       .catch((err) => console.log(err));
@@ -77,6 +79,7 @@ function StoreDetails() {
       store: storeId,
       rate: price,
     });
+    
   };
 
   const renderQuantity = (quantity) => {
@@ -209,7 +212,10 @@ function StoreDetails() {
         </div>
         <span className="clearfix"></span>
       </div>
+      <Container>
       <div>{renderProducts}</div>
+      </Container>
+      
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalBody>
           <h5>Select Quantity</h5>

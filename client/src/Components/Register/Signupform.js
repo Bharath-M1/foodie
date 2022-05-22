@@ -23,9 +23,11 @@ const Signupform = ({ onClick }) => {
       axios
         .post("/user", { ...values })
         .then((data) => {
-          successToast(data.data.status);
+          alert(data.data.status);
+          window.location = "/";
+
         })
-        .catch((err) => errorToast(err.data.status));
+        .catch((err) => alert(err.data.status));
     },
     validationSchema: Yup.object({
       name: Yup.string()

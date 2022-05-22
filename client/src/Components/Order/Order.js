@@ -65,11 +65,11 @@ function Order() {
         <span className="mx-1">:</span>
         <span> {order.products[0].quantity}</span>
       </p>
-      <p className="my-1">
+      {/* <p className="my-1">
         <span className="fw-bold">Store </span>
         <span className="mx-1">:</span>
-        <span>{order.storeId.storeName}</span>
-      </p>
+        <span>{order.storeId.seating}</span>
+      </p> */}
       <p className="my-1">
         <span className="fw-bold">Ordered by</span>
         <span className="mx-1">:</span>

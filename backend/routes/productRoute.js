@@ -14,6 +14,7 @@ router
   .post(product.getParticularProduct)
   .put()
   .delete();
+router.route("/product/:id").delete(product.delete);
 router.route("/getProductsfromSingleStore/:store").get(product.getStoreProduct);
 router.route("/getProductsbyStore").post(product.getProductsbyStore);
 module.exports = router;

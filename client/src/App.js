@@ -25,6 +25,7 @@ import UpdateQuantity from "./Components/Admin/UpdateQuantity";
 import UpdateWallet from "./Components/Admin/UpdateWallet";
 import Orders from "./Components/Admin/Orders";
 import OrderHistory from "./Components/Admin/OrderHistory";
+import AdminLogin from "./Components/Admin/AdminLogin";
 
 function App() {
   const bounce = cssTransition({
@@ -32,20 +33,15 @@ function App() {
     exit: "animate__animated animate__bounceOut",
   });
 
-  const User = ({ match }) => {};
+  
 
-  const Admin = ({ match }) => {
-    // <Routes>
-    //   <Route path={`/admin/home`} exact={true} element={<HomePage />} />
-    // </Routes>;
-  };
-  const Store = ({ match }) => {};
+
+
+
   return (
     <div>
       <Router>
         <Header />
-        {/* <AdminHeader/> */}
-        <Container>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<PageNotFound />} />
@@ -53,13 +49,12 @@ function App() {
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/update" element={<Update />} />
             <Route exact path="/cart" element={<Cart />} />
-            {/* <Route exact path="/user" element={<User />} />
            
-            <Route exact path="/store" element={<Store />} /> */}
             <Route exact path="/order" element={<Order />} />
+            <Route exact path="/admin" element={<AdminLogin/>}/>
             {localStorage.getItem("role") === "admin" ? (
               <>
-                <Route exact path="/admin" element={<AdminHome />} />
+                <Route exact path="/admin/home" element={<AdminHome />} />
                 <Route
                   exact
                   path="/admin/addproducts"
@@ -86,7 +81,7 @@ function App() {
               <>
                 <Route
                   exact={false}
-                  path="/admin"
+                  path="/admin/home"
                   element={<Navigate to="/" />}
                 />
                 <Route
@@ -118,7 +113,7 @@ function App() {
               </>
             )}
           </Routes>
-        </Container>
+        
         <Footer />
       </Router>
       <ToastContainer transition={bounce} />

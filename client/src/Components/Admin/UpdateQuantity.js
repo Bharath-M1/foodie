@@ -3,6 +3,7 @@ import { GiDoorHandle } from "react-icons/gi";
 import { successToast, warningToast } from "../utils/toast";
 import myaxios from "../utils/axios";
 import Sidebar from "./Sidebar/Sidebar";
+import { Card } from "reactstrap";
 
 function UpdateQuantity() {
   const [stores, setStores] = useState([]);
@@ -80,10 +81,12 @@ function UpdateQuantity() {
     <option value={value._id}>{value.productName}</option>
   ));
   return (
-    <Sidebar>
+  
       <div className="my-5 mx-5 p-4">
-        <h5>UPDATE QUANTITY</h5>
-        <form>
+        <Card className="p-3 my-2 rounded-lg shadow w-lg-25 w-md-50 w-100">
+          <div><h5 className="text-center h3 my-1">UPDATE QUANTITY</h5>
+          <Card className="border-0">
+          <form className="mx-auto">
           <div className="my-3">
             <label className="d-block fw-bold my-1">Store Name</label>
             <select
@@ -127,8 +130,12 @@ function UpdateQuantity() {
             Update Quantity
           </button>
         </form>
+          </Card>
+       </div>
+        
+        </Card>
       </div>
-    </Sidebar>
+  
   );
 }
 
